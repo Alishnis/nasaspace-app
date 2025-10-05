@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Forecast API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .result { margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 4px; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e8; color: #2e7d32; }
+        button { padding: 10px 20px; margin: 5px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #1976d2; }
+        input { padding: 8px; margin: 5px; border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🌍 NASA TEMPO Air Quality Monitor - API Test</h1>
+    
+    <div class="test-section">
+        <h2>Test Coordinates</h2>
+        <input type="number" id="lat" placeholder="Latitude" value="40.7128" step="0.000001">
+        <input type="number" id="lng" placeholder="Longitude" value="-74.0060" step="0.000001">
+        <input type="number" id="days" placeholder="Days" value="5" min="1" max="7">
+        <br>
+        <button onclick="testCurrentAirQuality()">Test Current Air Quality</button>
+        <button onclick="testForecast()">Test Forecast</button>
+        <button onclick="testHealth()">Test Health Check</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Results</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3003';
+        
+        function addResult(message, isError = false) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${isError ? 'error' : 'success'}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            results.appendChild(div);
+        }
+
+        async function testHealth() {
+            try {
+                addResult('Testing health check...');
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                addResult(`Health check: ${JSON.stringify(data)}`);
+            } catch (error) {
+                addResult(`Health check failed: ${error.message}`, true);
+            }
+        }
+
+        async function testCurrentAirQuality() {
+            try {
+                const lat = document.getElementById('lat').value;
+                const lng = document.getElementById('lng').value;
+                
+                addResult(`Testing current air quality for ${lat}, ${lng}...`);
+                const response = await fetch(`${API_BASE}/api/air-quality/current?lat=${lat}&lng=${lng}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    addResult(`Error: ${data.error}`, true);
+                } else {
+                    addResult(`Current AQI: ${data.aqi} (${data.category})`);
+                    addResult(`Pollutants: PM2.5=${data.pollutants.pm25?.toFixed(1)}, PM10=${data.pollutants.pm10?.toFixed(1)}`);
+                }
+            } catch (error) {
+                addResult(`Current air quality test failed: ${error.message}`, true);
+            }
+        }
+
+        async function testForecast() {
+            try {
+                const lat = document.getElementById('lat').value;
+                const lng = document.getElementById('lng').value;
+                const days = document.getElementById('days').value;
+                
+                addResult(`Testing forecast for ${lat}, ${lng} (${days} days)...`);
+                const response = await fetch(`${API_BASE}/api/air-quality/forecast?lat=${lat}&lng=${lng}&days=${days}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    addResult(`Error: ${data.error}`, true);
+                } else {
+                    addResult(`Forecast generated: ${data.forecast.length} days`);
+                    data.forecast.forEach((day, index) => {
+                        addResult(`Day ${index + 1}: AQI ${day.aqi} (${day.category})`);
+                    });
+                }
+            } catch (error) {
+                addResult(`Forecast test failed: ${error.message}`, true);
+            }
+        }
+
+        // Auto-test on load
+        window.onload = function() {
+            addResult('Page loaded. Ready to test API endpoints.');
+        };
+    </script>
+</body>
+</html>

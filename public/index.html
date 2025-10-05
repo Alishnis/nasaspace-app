@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA TEMPO Air Quality Monitor</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <h1>🌍 NASA TEMPO Air Quality Monitor</h1>
+                    <p>Real-time air quality monitoring using NASA TEMPO data</p>
+                </div>
+                <nav class="nav">
+                    <button class="nav-btn active" data-section="monitor">Monitor</button>
+                    <button class="nav-btn" data-section="forecast">Forecast</button>
+                    <button class="nav-btn" data-section="ranking">Ranking</button>
+                    <button class="nav-btn" data-section="history">History</button>
+                    <button class="nav-btn" data-section="alerts">Alerts</button>
+                    <button class="nav-btn" data-section="login">Login</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Location Widget -->
+        <div id="locationWidget" class="location-widget" style="display: none;">
+            <button class="widget-close" id="closeWidget">×</button>
+            <div class="widget-content">
+                <div class="aqi-section">
+                    <div class="aqi-badge">
+                        <div class="aqi-value" id="widgetAQI">--</div>
+                        <div class="aqi-label">US AQI+</div>
+                    </div>
+                    <div class="aqi-category" id="widgetCategory">--</div>
+                    <div class="user-icon">👤</div>
+                </div>
+                <div class="widget-status">
+                    <span class="last-updated" id="widgetLastUpdated">Last updated: --</span>
+                    <span class="update-indicator" id="widgetUpdateIndicator">🔄</span>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="pollutant-section">
+                    <div class="main-pollutant">
+                        <span class="pollutant-label">Main pollutant:</span>
+                        <span class="pollutant-name" id="widgetMainPollutant">--</span>
+                    </div>
+                    <div class="pollutant-concentration" id="widgetConcentration">--</div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="weather-section">
+                    <div class="weather-item">
+                        <span class="weather-icon">☀️</span>
+                        <span class="weather-value" id="widgetTemperature">--°</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-icon">💨</span>
+                        <span class="weather-value" id="widgetWind">-- km/h</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-icon">💧</span>
+                        <span class="weather-value" id="widgetHumidity">--%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Monitor Section -->
+                <section id="monitor" class="section active">
+                    <div class="section-header">
+                        <h2>Real-time Air Quality Monitor</h2>
+                        <p>Get current air quality data for any location</p>
+                    </div>
+                    
+                    <div class="location-input">
+                        <div class="input-group">
+                            <label for="lat">Latitude:</label>
+                            <input type="number" id="lat" placeholder="e.g., 40.7128" step="0.000001">
+                        </div>
+                        <div class="input-group">
+                            <label for="lng">Longitude:</label>
+                            <input type="number" id="lng" placeholder="e.g., -74.0060" step="0.000001">
+                        </div>
+                        <button id="getCurrentLocation" class="btn btn-secondary">Use Current Location</button>
+                        <button id="cancelLocation" class="btn btn-danger" style="display: none;">Cancel</button>
+                        <button id="getAirQuality" class="btn btn-primary">Get Air Quality</button>
+                        <button id="showLocationWidget" class="btn btn-success">Show Location Widget</button>
+                    </div>
+
+                    <div id="currentResults" class="results"></div>
+                </section>
+
+                <!-- Forecast Section -->
+                <section id="forecast" class="section">
+                    <div class="section-header">
+                        <h2>5-Day Air Quality Forecast</h2>
+                        <p>Plan ahead with air quality predictions</p>
+                    </div>
+                    
+                    <div class="location-input">
+                        <div class="input-group">
+                            <label for="forecastLat">Latitude:</label>
+                            <input type="number" id="forecastLat" placeholder="e.g., 40.7128" step="0.000001">
+                        </div>
+                        <div class="input-group">
+                            <label for="forecastLng">Longitude:</label>
+                            <input type="number" id="forecastLng" placeholder="e.g., -74.0060" step="0.000001">
+                        </div>
+                        <div class="input-group">
+                            <label for="forecastDays">Days:</label>
+                            <select id="forecastDays">
+                                <option value="3">3 Days</option>
+                                <option value="5" selected>5 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                        <button id="getForecast" class="btn btn-primary">Get Forecast</button>
+                    </div>
+
+                    <div id="forecastResults" class="results"></div>
+                </section>
+
+                <!-- City Ranking Section -->
+                <section id="ranking" class="section">
+                    <div class="section-header">
+                        <h2>City Ranking</h2>
+                        <p>Real-time air quality ranking of major cities</p>
+                    </div>
+                    
+                    <div class="ranking-controls">
+                        <div class="input-group">
+                            <label for="countrySelect">Country:</label>
+                            <select id="countrySelect">
+                                <option value="US">United States</option>
+                                <option value="KZ">Kazakhstan</option>
+                                <option value="RU">Russia</option>
+                                <option value="CN">China</option>
+                                <option value="IN">India</option>
+                                <option value="DE">Germany</option>
+                                <option value="FR">France</option>
+                                <option value="GB">United Kingdom</option>
+                            </select>
+                        </div>
+                        <button id="getRanking" class="btn btn-primary">Get City Ranking</button>
+                    </div>
+
+                    <div id="rankingResults" class="results"></div>
+                </section>
+
+                <!-- Historical Data Section -->
+                <section id="history" class="section">
+                    <div class="section-header">
+                        <h2>Historical Air Quality</h2>
+                        <p>View historical air quality data and trends</p>
+                    </div>
+                    
+                    <div class="history-controls">
+                        <div class="input-group">
+                            <label for="historyLat">Latitude:</label>
+                            <input type="number" id="historyLat" placeholder="e.g., 40.7128" step="0.000001">
+                        </div>
+                        <div class="input-group">
+                            <label for="historyLng">Longitude:</label>
+                            <input type="number" id="historyLng" placeholder="e.g., -74.0060" step="0.000001">
+                        </div>
+                        <div class="input-group">
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        <div class="input-group">
+                            <label for="endDate">End Date:</label>
+                            <input type="date" id="endDate">
+                        </div>
+                        <button id="getHistory" class="btn btn-primary">Get Historical Data</button>
+                    </div>
+
+                    <div id="historyResults" class="results"></div>
+                </section>
+
+                <!-- Alerts Section -->
+                <section id="alerts" class="section">
+                    <div class="section-header">
+                        <h2>Air Quality Alerts</h2>
+                        <p>Subscribe to receive notifications about air quality</p>
+                    </div>
+                    
+                    <div class="alert-form">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="alertLat">Latitude:</label>
+                                <input type="number" id="alertLat" placeholder="e.g., 40.7128" step="0.000001">
+                            </div>
+                            <div class="input-group">
+                                <label for="alertLng">Longitude:</label>
+                                <input type="number" id="alertLng" placeholder="e.g., -74.0060" step="0.000001">
+                            </div>
+                            <div class="input-group">
+                                <button type="button" id="useCurrentLocationAlert" class="btn btn-secondary">Use Current Location</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="alertEmail">Email:</label>
+                                <input type="email" id="alertEmail" placeholder="your@email.com">
+                            </div>
+                            <div class="input-group">
+                                <label for="alertPhone">Phone (optional):</label>
+                                <input type="tel" id="alertPhone" placeholder="+1234567890">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Alert Levels:</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" value="unhealthy" checked> Unhealthy</label>
+                                <label><input type="checkbox" value="very-unhealthy" checked> Very Unhealthy</label>
+                                <label><input type="checkbox" value="hazardous" checked> Hazardous</label>
+                            </div>
+                        </div>
+                        
+                        <button id="subscribeAlerts" class="btn btn-primary">Subscribe to Alerts</button>
+                    </div>
+
+                    <div id="alertResults" class="results"></div>
+                </section>
+
+                <!-- Login Section -->
+                <section id="login" class="section">
+                    <div class="section-header">
+                        <h2>User Account</h2>
+                        <p>Create an account or login to access personalized features</p>
+                    </div>
+                    
+                    <div class="auth-forms">
+                        <div class="auth-form">
+                            <h3>Login</h3>
+                            <form id="loginForm">
+                                <div class="input-group">
+                                    <label for="loginEmail">Email:</label>
+                                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="loginPassword">Password:</label>
+                                    <input type="password" id="loginPassword" placeholder="Your password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </form>
+                        </div>
+                        
+                        <div class="auth-form">
+                            <h3>Register</h3>
+                            <form id="registerForm">
+                                <div class="input-group">
+                                    <label for="registerName">Name:</label>
+                                    <input type="text" id="registerName" placeholder="Your name" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="registerEmail">Email:</label>
+                                    <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="registerPassword">Password:</label>
+                                    <input type="password" id="registerPassword" placeholder="Your password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="authResults" class="results"></div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 NASA Space Apps Challenge. Built with NASA TEMPO data.</p>
+                <p>Real-time air quality monitoring for a healthier planet.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/map.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

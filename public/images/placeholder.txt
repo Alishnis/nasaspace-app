@@ -1,0 +1,11 @@
+This directory contains images for the NASA TEMPO Air Quality Monitor application.
+
+Placeholder for:
+- favicon.ico
+- icon.png
+- logo.png
+- background images
+- air quality icons
+- weather icons
+
+For production deployment, replace this file with actual image assets.
