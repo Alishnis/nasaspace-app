@@ -72,3 +72,4 @@ The application comes with all necessary API keys pre-configured:
 - All configuration is ready to go!
 
 **Ready to monitor air quality? Start the app and breathe easier! 🌍✨**
+
