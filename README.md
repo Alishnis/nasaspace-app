@@ -1,16 +1,28 @@
-# 🌍 NASA TEMPO Air Quality Monitor
+# 🌍 NASA TEMPO Air Quality Monitoring App
 
-A real-time air quality monitoring application using NASA TEMPO (Tropospheric Emissions: Monitoring of Pollution) data, ground-based measurements, and weather data to provide accurate air quality forecasts and timely notifications.
+A comprehensive real-time air quality monitoring application using NASA TEMPO satellite data, ground-based measurements, and weather data integration.
 
 ## 🚀 Features
 
-- **Real-time Air Quality Monitoring**: Get current air quality data for any location
-- **5-Day Forecast**: Plan ahead with accurate air quality predictions
-- **Smart Notifications**: Subscribe to alerts for poor air quality conditions
-- **Multiple Data Sources**: NASA TEMPO satellite data, weather data, and ground stations
-- **Interactive Maps**: Visualize air quality data on interactive maps
-- **User Accounts**: Personalized experience with user accounts
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
+### Core Functionality
+- **Real-time Air Quality Monitoring** - Current AQI data with detailed pollutant breakdown
+- **NASA TEMPO Integration** - Satellite-based pollution monitoring
+- **Weather Integration** - OpenWeatherMap API for comprehensive weather data
+- **City Ranking System** - Global air quality rankings with coordinates
+- **Historical Data Visualization** - Interactive charts and trends
+- **Location Widget** - Compact floating widget with auto-update
+
+### Notification System
+- **Email Alerts** - Gmail SMTP integration with HTML templates
+- **Test Notifications** - Immediate confirmation emails after subscription
+- **Real-time Updates** - WebSocket-based live notifications
+- **Multi-level Alerts** - Configurable alert thresholds
+
+### User Experience
+- **Responsive Design** - Modern UI with mobile-first approach
+- **Geolocation Support** - Automatic location detection with fallback options
+- **Interactive Maps** - Visual representation of air quality data
+- **Health Recommendations** - WHO guidelines and health advice
 
 ## 🛠️ Technology Stack
 
@@ -18,36 +30,33 @@ A real-time air quality monitoring application using NASA TEMPO (Tropospheric Em
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
 - **Socket.io** - Real-time communication
-- **MongoDB** - Database (optional)
-- **Redis** - Caching (optional)
-- **JWT** - Authentication
-- **Nodemailer** - Email notifications
+- **Redis** - Caching and session management
+- **Nodemailer** - Email service integration
 
 ### Frontend
-- **HTML5** - Structure
-- **CSS3** - Styling with modern features
-- **JavaScript (ES6+)** - Client-side logic
-- **Socket.io Client** - Real-time updates
-- **Leaflet** - Interactive maps (optional)
+- **HTML5/CSS3** - Modern web standards
+- **JavaScript ES6+** - Interactive functionality
+- **Canvas API** - Data visualization
+- **Geolocation API** - Location services
 
-### APIs
-- **NASA TEMPO** - Satellite air quality data
-- **OpenWeatherMap** - Weather data
-- **Ground Stations** - Local air quality measurements
+### APIs & Services
+- **NASA TEMPO API** - Satellite air quality data
+- **OpenWeatherMap API** - Weather information
+- **Gmail SMTP** - Email notifications
 
 ## 📦 Installation
 
 ### Prerequisites
 - Node.js (v14 or higher)
-- npm or yarn
+- Redis (optional, falls back to in-memory cache)
 - Git
 
 ### Quick Start
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/nasa-tempo-air-quality-monitor.git
-   cd nasa-tempo-air-quality-monitor
+   git clone https://github.com/Alishnis/nasaspace-app.git
+   cd nasaspace-app
    ```
 
 2. **Install dependencies**
@@ -55,10 +64,10 @@ A real-time air quality monitoring application using NASA TEMPO (Tropospheric Em
    npm install
    ```
 
-3. **Set up environment variables**
+3. **Configure environment variables**
    ```bash
    cp env.example .env
-   # Edit .env with your API keys and configuration
+   # Edit .env with your API keys
    ```
 
 4. **Start the application**
@@ -68,203 +77,208 @@ A real-time air quality monitoring application using NASA TEMPO (Tropospheric Em
    npm run dev
    ```
 
-5. **Open your browser**
-   ```
-   http://localhost:3001
-   ```
+5. **Access the application**
+   - Open http://localhost:3003
+   - Start monitoring air quality!
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
-Create a `.env` file based on `env.example`:
+The application includes all necessary API keys for immediate use:
 
 ```env
 # Server Configuration
-PORT=3001
+PORT=3003
 NODE_ENV=development
 
-# API Keys (Optional for development)
-TEMPO_API_KEY=your-nasa-tempo-api-key
-WEATHER_API_KEY=your-openweathermap-api-key
+# NASA TEMPO API (Included)
+NASA_TEMPO_API_KEY=rpDFc3APJjZmiaAjRtRND9vFo3xF0MFWAPxQOxBC
+NASA_TEMPO_BASE_URL=https://api.nasa.gov/insight_weather
 
-# Email Configuration (Optional)
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-app-password
+# Weather API (Included)
+WEATHER_API_KEY=45715ae2f073ea19d11f2a1e434236fe
+WEATHER_API_URL=https://api.openweathermap.org/data/2.5
 
-# JWT Secret
-JWT_SECRET=your-super-secret-jwt-key
+# Email Configuration (Gmail SMTP)
+EMAIL_SERVICE=gmail
+EMAIL_USER=romankulalisher@gmail.com
+EMAIL_PASS=oszy mfrw goyl prag
 
 # Database (Optional)
-MONGODB_URI=mongodb://localhost:27017/nasa-tempo-air-quality
-REDIS_HOST=localhost
-REDIS_PORT=6379
+MONGODB_URI=mongodb://localhost:27017/air-quality-monitor
+REDIS_URL=redis://localhost:6379
+
+# Security
+JWT_SECRET=56e82a4b97abf742543f7c8c98ec2b15b1db4e2a3e1be0b10fa1a650e4b78950
+ENCRYPTION_KEY=6f7c40e96f58b7d29551098d7bda4c2f869ad88fe1d2be556ae9b0d4986cb389
 ```
 
-### API Keys
+## 🌟 Key Features Explained
 
-For production use, you'll need:
+### 1. Real-time Air Quality Monitoring
+- **Current AQI Display** - Live air quality index with color-coded categories
+- **Pollutant Breakdown** - PM2.5, PM10, Ozone, NO2, SO2, CO concentrations
+- **Health Recommendations** - WHO guidelines and safety advice
+- **Location-based Data** - Accurate readings for specific coordinates
 
-1. **NASA TEMPO API Key**
-   - Visit [NASA API Portal](https://api.nasa.gov/)
-   - Register for a free API key
-   - Add to `TEMPO_API_KEY` in `.env`
+### 2. City Ranking System
+- **Global Rankings** - Air quality comparison across cities
+- **Coordinate Display** - Precise location coordinates for each city
+- **Country Filtering** - Filter rankings by country
+- **Real-time Updates** - Live ranking updates
 
-2. **OpenWeatherMap API Key**
-   - Visit [OpenWeatherMap](https://openweathermap.org/api)
-   - Register for a free API key
-   - Add to `WEATHER_API_KEY` in `.env`
+### 3. Historical Data Visualization
+- **Interactive Charts** - Canvas-based data visualization
+- **Date Range Selection** - Custom time period analysis
+- **Trend Analysis** - Air quality patterns over time
+- **Export Capabilities** - Data export functionality
 
-## 🚀 Usage
+### 4. Notification System
+- **Email Alerts** - HTML-formatted email notifications
+- **Test Notifications** - Immediate confirmation after subscription
+- **Real-time Updates** - WebSocket-based live alerts
+- **Multi-channel Support** - Email and SMS notifications
 
-### Web Interface
+### 5. Location Widget
+- **Floating Widget** - Compact air quality display
+- **Auto-update** - Automatic data refresh every 5 minutes
+- **Weather Integration** - Temperature, humidity, wind speed
+- **Responsive Design** - Mobile-optimized interface
 
-1. **Monitor**: Enter coordinates to get current air quality
-2. **Forecast**: Get 5-day air quality predictions
-3. **Alerts**: Subscribe to notifications for poor air quality
-4. **Login**: Create an account for personalized features
-
-### API Endpoints
-
-#### Air Quality
-- `GET /api/air-quality/current?lat=40.7128&lng=-74.0060` - Current air quality
-- `GET /api/air-quality/forecast?lat=40.7128&lng=-74.0060&days=5` - Forecast
-- `GET /api/air-quality/historical?lat=40.7128&lng=-74.0060&startDate=2024-01-01&endDate=2024-01-31` - Historical data
-
-#### TEMPO Data
-- `GET /api/tempo/data?lat=40.7128&lng=-74.0060` - TEMPO satellite data
-- `GET /api/tempo/coverage?lat=40.7128&lng=-74.0060` - Coverage information
-
-#### Weather
-- `GET /api/weather/current?lat=40.7128&lng=-74.0060` - Current weather
-- `GET /api/weather/forecast?lat=40.7128&lng=-74.0060&days=5` - Weather forecast
-
-#### Notifications
-- `POST /api/notifications/subscribe` - Subscribe to alerts
-- `DELETE /api/notifications/unsubscribe/:id` - Unsubscribe from alerts
-
-#### Users
-- `POST /api/users/register` - Register new user
-- `POST /api/users/login` - Login user
-- `GET /api/users/profile` - Get user profile
-
-## 🧪 Development
-
-### Development Mode
-```bash
-npm run dev
-```
-
-### Testing
-```bash
-npm test
-```
-
-### Building for Production
-```bash
-npm run build
-```
-
-### Docker Support
-```bash
-# Build Docker image
-docker build -t nasa-tempo-air-quality .
-
-# Run with Docker Compose
-docker-compose up
-```
-
-## 📊 Data Sources
-
-### NASA TEMPO
-- **NO2** (Nitrogen Dioxide)
-- **O3** (Ozone)
-- **HCHO** (Formaldehyde)
-- **AOD** (Aerosol Optical Depth)
-
-### Weather Data
-- Temperature, humidity, pressure
-- Wind speed and direction
-- Precipitation
-- UV index
-
-### Ground Stations
-- PM2.5, PM10
-- Ozone, NO2, SO2, CO
-- Real-time measurements
-
-## 🔔 Notifications
-
-### Alert Levels
-- **Unhealthy** (AQI 151-200)
-- **Very Unhealthy** (AQI 201-300)
-- **Hazardous** (AQI 301+)
-
-### Notification Types
-- **Email**: HTML formatted notifications
-- **SMS**: Text message alerts (requires Twilio)
-- **Push**: Browser notifications
-- **Real-time**: WebSocket updates
-
-## 🌐 Deployment
-
-### Production Deployment
-
-1. **Set up environment variables**
-2. **Configure database connections**
-3. **Set up email service**
-4. **Configure reverse proxy (nginx)**
-5. **Set up SSL certificates**
-6. **Configure monitoring and logging**
+## 🚀 Deployment
 
 ### Docker Deployment
 ```bash
-docker-compose -f docker-compose.prod.yml up -d
+# Build the container
+docker build -t nasa-air-quality .
+
+# Run the container
+docker run -p 3003:3003 nasa-air-quality
 ```
 
-### Cloud Deployment
-- **Heroku**: Easy deployment with git
-- **AWS**: EC2, ECS, or Lambda
-- **Google Cloud**: App Engine or Cloud Run
-- **Azure**: App Service or Container Instances
+### Docker Compose
+```bash
+# Start all services
+docker-compose up -d
+```
+
+### Production Deployment
+1. **Set environment variables** on your server
+2. **Configure email service** for notifications
+3. **Set up Redis** for caching (optional)
+4. **Deploy using PM2** for process management
+
+## 📊 API Endpoints
+
+### Air Quality
+- `GET /api/air-quality/current` - Current air quality data
+- `GET /api/air-quality/forecast` - Air quality forecast
+- `GET /api/air-quality/historical` - Historical data
+- `GET /api/air-quality/ranking` - City rankings
+
+### Weather
+- `GET /api/weather/current` - Current weather data
+- `GET /api/weather/forecast` - Weather forecast
+
+### Notifications
+- `POST /api/notifications/subscribe` - Subscribe to alerts
+- `GET /api/notifications/subscriptions` - Get subscriptions
+
+## 🎯 Usage Examples
+
+### 1. Monitor Current Air Quality
+```javascript
+// Get air quality for specific coordinates
+const response = await fetch('/api/air-quality/current?lat=40.7128&lng=-74.0060');
+const data = await response.json();
+console.log(`AQI: ${data.aqi} - ${data.category}`);
+```
+
+### 2. Subscribe to Alerts
+```javascript
+// Subscribe to air quality alerts
+const subscription = await fetch('/api/notifications/subscribe', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    lat: 40.7128,
+    lng: -74.0060,
+    email: 'user@example.com',
+    alertLevels: ['unhealthy', 'very-unhealthy', 'hazardous']
+  })
+});
+```
+
+### 3. Get City Rankings
+```javascript
+// Get city rankings for specific country
+const rankings = await fetch('/api/air-quality/ranking?country=US');
+const data = await rankings.json();
+console.log(data.cities);
+```
+
+## 🔒 Security Features
+
+- **Rate Limiting** - API request throttling
+- **Input Validation** - Comprehensive data validation
+- **CORS Protection** - Cross-origin request security
+- **Helmet.js** - Security headers
+- **JWT Authentication** - Secure user sessions
+
+## 📱 Mobile Support
+
+- **Responsive Design** - Mobile-first approach
+- **Touch-friendly Interface** - Optimized for touch devices
+- **Geolocation Support** - GPS integration
+- **Offline Capabilities** - Cached data support
+
+## 🧪 Testing
+
+### Test Notifications
+```bash
+# Run notification tests
+node test-notification.js
+```
+
+### API Testing
+```bash
+# Test API endpoints
+curl http://localhost:3003/api/air-quality/current?lat=40.7128&lng=-74.0060
+```
+
+## 📈 Performance
+
+- **Redis Caching** - Fast data retrieval
+- **In-memory Fallback** - No Redis required
+- **Optimized Queries** - Efficient data processing
+- **CDN Ready** - Static asset optimization
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-## 📝 License
+## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is open source and available under the MIT License.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- **NASA** for providing TEMPO satellite data
-- **OpenWeatherMap** for weather data
-- **OpenStreetMap** for map tiles
-- **NASA Space Apps Challenge** for the inspiration
+For support and questions:
+- Create an issue on GitHub
+- Check the documentation
+- Review the API endpoints
 
-## 📞 Support
+## 🌟 Acknowledgments
 
-For support, email support@nasatempo-airquality.com or create an issue on GitHub.
-
-## 🔮 Future Enhancements
-
-- [ ] Machine learning predictions
-- [ ] Mobile app (React Native)
-- [ ] Advanced analytics dashboard
-- [ ] Integration with more data sources
-- [ ] Offline support
-- [ ] Multi-language support
-- [ ] Advanced mapping features
-- [ ] Social sharing
-- [ ] Historical trend analysis
+- **NASA** - For TEMPO satellite data
+- **OpenWeatherMap** - For weather data
+- **WHO** - For air quality guidelines
+- **Community** - For feedback and contributions
 
 ---
 
-**Built for NASA Space Apps Challenge 2024** 🚀
-
-*Real-time air quality monitoring for a healthier planet.*
+**Ready to monitor air quality? Start the app and breathe easier! 🌍✨**
