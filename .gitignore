@@ -183,3 +183,6 @@ Desktop.ini
 # Temporary files
 *.tmp
 *.temp
+
+# Local project copies
+nasaspace-app/
