@@ -57,7 +57,9 @@ jspm_packages/
 .yarn-integrity
 
 # dotenv environment variables file
-# .env - COMMENTED OUT TO INCLUDE API KEYS
+.env
+.env.local
+.env.*.local
 
 # parcel-bundler cache
 .cache
@@ -133,7 +135,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-# .env - COMMENTED OUT TO INCLUDE API KEYS
+.env
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

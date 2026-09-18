@@ -210,9 +210,9 @@ class AirQualityApp {
     showLocationSuggestions() {
         // Show helpful suggestions for getting coordinates
         const suggestions = `
-            <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; border-left: 4px solid #007bff;">
-                <strong>💡 Alternative ways to get coordinates:</strong>
-                <ul style="margin: 5px 0; padding-left: 20px;">
+            <div class="recommendations" style="margin-top: 10px;">
+                <strong>Alternative ways to get coordinates:</strong>
+                <ul style="margin: 5px 0; padding-left: 20px; list-style: disc;">
                     <li>Use Google Maps: Right-click on a location → "What's here?" → Copy coordinates</li>
                     <li>Use your phone's GPS app to get coordinates</li>
                     <li>Try refreshing the page and allowing location access</li>
@@ -630,10 +630,7 @@ class AirQualityApp {
             html += `
                 <tr class="ranking-row ${index === 0 ? 'top-city' : ''}">
                     <td class="rank">${index + 1}</td>
-                    <td class="city-name">
-                        <span class="flag">🏳️</span>
-                        ${city.name}
-                    </td>
+                    <td class="city-name">${city.name}</td>
                     <td class="aqi-value">
                         <span class="aqi-badge ${aqiColor}">${city.aqi}</span>
                         <span class="aqi-category">${aqiCategory}</span>

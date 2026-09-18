@@ -1,7 +1,7 @@
 // API service for communicating with the backend
 class APIService {
     constructor() {
-        this.baseURL = 'http://localhost:3003';
+        this.baseURL = window.location.origin;
         this.token = localStorage.getItem('token');
     }
 
@@ -196,7 +196,7 @@ class WebSocketService {
 
     connect() {
         try {
-            this.socket = io('http://localhost:3003');
+            this.socket = io(window.location.origin);
             
             this.socket.on('connect', () => {
                 console.log('Connected to server');

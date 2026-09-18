@@ -1,4 +1,4 @@
-/* NASA TEMPO Air Quality Monitor - Styles */
+/* NASA TEMPO Air Quality Monitor - Styles (classic theme) */
 
 * {
     margin: 0;
@@ -7,10 +7,10 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Georgia, "Times New Roman", Times, serif;
     line-height: 1.6;
-    color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #2b2b2b;
+    background: #f4f2ee;
     min-height: 100vh;
 }
 
@@ -22,9 +22,8 @@ body {
 
 /* Header */
 .header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    background: #16305c;
+    border-bottom: 3px solid #0d1f3d;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -38,41 +37,46 @@ body {
 }
 
 .logo h1 {
-    color: #1e3a8a;
-    font-size: 1.8rem;
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
     margin-bottom: 0.25rem;
+    letter-spacing: 0.02em;
 }
 
 .logo p {
-    color: #64748b;
-    font-size: 0.9rem;
+    color: #c7d2e3;
+    font-size: 0.85rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .nav {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.25rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .nav-btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    background: #f1f5f9;
-    color: #475569;
-    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #dbe3f0;
+    border-radius: 2px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .nav-btn:hover {
-    background: #e2e8f0;
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
 }
 
 .nav-btn.active {
-    background: #3b82f6;
-    color: white;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    background: #ffffff;
+    color: #16305c;
+    border-color: #ffffff;
 }
 
 /* Main Content */
@@ -83,38 +87,35 @@ body {
 
 .section {
     display: none;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #d7d2c7;
+    border-radius: 3px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     margin-bottom: 2rem;
 }
 
 .section.active {
     display: block;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .section-header {
     text-align: center;
     margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2ddd1;
 }
 
 .section-header h2 {
-    color: #1e3a8a;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    color: #16305c;
+    font-size: 1.8rem;
+    margin-bottom: 0.4rem;
 }
 
 .section-header p {
-    color: #64748b;
-    font-size: 1.1rem;
+    color: #6b6459;
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Location Input */
@@ -123,76 +124,99 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: #f8fafc;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    padding: 1.25rem;
+    background: #faf9f6;
+    border-radius: 3px;
+    border: 1px solid #d7d2c7;
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .input-group label {
-    font-weight: 600;
-    color: #374151;
-    font-size: 0.9rem;
+    font-weight: 700;
+    color: #3d3830;
+    font-size: 0.85rem;
 }
 
 .input-group input,
 .input-group select {
-    padding: 0.75rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+    padding: 0.6rem;
+    border: 1px solid #b9b2a3;
+    border-radius: 2px;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: border-color 0.15s ease;
     background: white;
+    color: #2b2b2b;
 }
 
 .input-group input:focus,
 .input-group select:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #16305c;
+    box-shadow: 0 0 0 1px #16305c;
 }
 
 /* Buttons */
 .btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
+    padding: 0.65rem 1.4rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
     text-decoration: none;
     display: inline-block;
     text-align: center;
 }
 
 .btn-primary {
-    background: #3b82f6;
-    color: white;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    background: #16305c;
+    color: #ffffff;
+    border-color: #16305c;
 }
 
 .btn-primary:hover {
-    background: #2563eb;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    background: #0d1f3d;
+    border-color: #0d1f3d;
 }
 
 .btn-secondary {
-    background: #64748b;
-    color: white;
-    box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+    background: #ffffff;
+    color: #16305c;
+    border-color: #16305c;
 }
 
 .btn-secondary:hover {
-    background: #475569;
-    transform: translateY(-2px);
+    background: #eef1f6;
+}
+
+.btn-success {
+    background: #2e7d32;
+    color: #ffffff;
+    border-color: #2e7d32;
+}
+
+.btn-success:hover {
+    background: #245e26;
+    border-color: #245e26;
+}
+
+.btn-danger {
+    background: #ffffff;
+    color: #a01919;
+    border-color: #a01919;
+}
+
+.btn-danger:hover {
+    background: #fbeaea;
 }
 
 /* Results */
@@ -201,12 +225,12 @@ body {
 }
 
 .air-quality-card {
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border: 1px solid #d7d2c7;
+    border-radius: 3px;
+    padding: 1.75rem;
     margin-bottom: 1.5rem;
-    border-left: 6px solid #3b82f6;
+    border-left: 5px solid #16305c;
 }
 
 .aqi-display {
@@ -215,38 +239,41 @@ body {
 }
 
 .aqi-value {
-    font-size: 4rem;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.aqi-value.good { color: #2e7d32; }
+.aqi-value.moderate { color: #b8860b; }
+.aqi-value.unhealthy { color: #c1440e; }
+.aqi-value.very-unhealthy { color: #a01919; }
+.aqi-value.hazardous { color: #5c1a1a; }
+
+.aqi-category {
+    font-size: 1.35rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
-.aqi-value.good { color: #10b981; }
-.aqi-value.moderate { color: #f59e0b; }
-.aqi-value.unhealthy { color: #f97316; }
-.aqi-value.very-unhealthy { color: #ef4444; }
-.aqi-value.hazardous { color: #8b5cf6; }
-
-.aqi-category {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
 .health-message {
-    color: #64748b;
-    font-size: 1.1rem;
+    color: #57524a;
+    font-size: 1.05rem;
     margin-bottom: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .recommendations {
-    background: #f0f9ff;
+    background: #f4f2ee;
     padding: 1rem;
-    border-radius: 8px;
-    border-left: 4px solid #0ea5e9;
+    border-radius: 2px;
+    border-left: 4px solid #16305c;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .recommendations h4 {
-    color: #0369a1;
+    color: #16305c;
     margin-bottom: 0.5rem;
 }
 
@@ -257,12 +284,12 @@ body {
 
 .recommendations li {
     padding: 0.25rem 0;
-    color: #0c4a6e;
+    color: #3d3830;
 }
 
 .recommendations li:before {
-    content: "• ";
-    color: #0ea5e9;
+    content: "- ";
+    color: #16305c;
     font-weight: bold;
 }
 
@@ -271,48 +298,51 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1rem;
     margin: 1.5rem 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .pollutant-card {
-    background: #f8fafc;
+    background: #faf9f6;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 2px;
     text-align: center;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #d7d2c7;
 }
 
 .pollutant-name {
-    font-weight: 600;
-    color: #374151;
+    font-weight: 700;
+    color: #3d3830;
     margin-bottom: 0.5rem;
 }
 
 .pollutant-value {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #1e3a8a;
+    color: #16305c;
     margin-bottom: 0.25rem;
 }
 
 .pollutant-unit {
     font-size: 0.8rem;
-    color: #64748b;
+    color: #6b6459;
 }
 
 .data-sources {
-    background: #f1f5f9;
+    background: #faf9f6;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 2px;
+    border: 1px solid #e2ddd1;
     margin-top: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .data-sources h3 {
-    color: #1e3a8a;
+    color: #16305c;
     margin-bottom: 0.5rem;
 }
 
 .data-sources p {
-    color: #64748b;
+    color: #6b6459;
     font-size: 0.9rem;
     margin: 0.25rem 0;
 }
@@ -323,25 +353,20 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-top: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .forecast-card {
-    background: white;
-    border-radius: 12px;
+    background: #ffffff;
+    border-radius: 2px;
     padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e2e8f0;
-    transition: transform 0.3s ease;
-}
-
-.forecast-card:hover {
-    transform: translateY(-4px);
+    border: 1px solid #d7d2c7;
 }
 
 .forecast-date {
-    font-weight: 600;
-    color: #374151;
+    font-weight: 700;
+    color: #3d3830;
     margin-bottom: 1rem;
 }
 
@@ -349,17 +374,18 @@ body {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .forecast-category {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1rem;
 }
 
 .forecast-pollutants {
     font-size: 0.9rem;
-    color: #64748b;
+    color: #6b6459;
 }
 
 .forecast-pollutants div {
@@ -368,11 +394,12 @@ body {
 
 /* Alert Form */
 .alert-form {
-    background: #f8fafc;
+    background: #faf9f6;
     padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    border-radius: 2px;
+    border: 1px solid #d7d2c7;
     margin-bottom: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .form-row {
@@ -392,7 +419,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
 }
 
@@ -410,30 +437,31 @@ body {
 }
 
 .auth-form {
-    background: #f8fafc;
+    background: #faf9f6;
     padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    border-radius: 2px;
+    border: 1px solid #d7d2c7;
 }
 
 .auth-form h3 {
-    color: #1e3a8a;
+    color: #16305c;
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
 /* Footer */
 .footer {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 2rem 0;
+    background: #16305c;
+    padding: 1.5rem 0;
     text-align: center;
-    color: #64748b;
-    border-top: 1px solid #e2e8f0;
+    color: #c7d2e3;
+    border-top: 3px solid #0d1f3d;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.85rem;
 }
 
 .footer p {
-    margin: 0.25rem 0;
+    margin: 0.2rem 0;
 }
 
 /* Loading States */
@@ -442,14 +470,15 @@ body {
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    color: #64748b;
+    color: #6b6459;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #e2e8f0;
-    border-top: 4px solid #3b82f6;
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e2ddd1;
+    border-top: 3px solid #16305c;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-right: 1rem;
@@ -462,21 +491,23 @@ body {
 
 /* Error States */
 .error {
-    background: #fef2f2;
-    color: #dc2626;
+    background: #fbeaea;
+    color: #a01919;
     padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #fecaca;
+    border-radius: 2px;
+    border: 1px solid #e3b5b5;
     margin: 1rem 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .success {
-    background: #f0fdf4;
-    color: #16a34a;
+    background: #eaf3ea;
+    color: #2e7d32;
     padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #bbf7d0;
+    border-radius: 2px;
+    border: 1px solid #b8d8ba;
     margin: 1rem 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Responsive Design */
@@ -485,28 +516,28 @@ body {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .nav {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     .location-input {
         grid-template-columns: 1fr;
     }
-    
+
     .form-row {
         grid-template-columns: 1fr;
     }
-    
+
     .auth-forms {
         grid-template-columns: 1fr;
     }
-    
+
     .forecast-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .pollutants-grid {
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
@@ -516,18 +547,18 @@ body {
     .container {
         padding: 0 10px;
     }
-    
+
     .section {
         padding: 1rem;
     }
-    
+
     .aqi-value {
-        font-size: 3rem;
+        font-size: 2.75rem;
     }
-    
+
     .nav-btn {
         padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -538,6 +569,7 @@ body {
     align-items: end;
     margin-bottom: 2rem;
     flex-wrap: wrap;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .ranking-controls .input-group {
@@ -547,44 +579,46 @@ body {
 
 .ranking-controls select {
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+    padding: 0.6rem;
+    border: 1px solid #b9b2a3;
+    border-radius: 2px;
     font-size: 1rem;
     background: white;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.15s ease;
 }
 
 .ranking-controls select:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: #16305c;
 }
 
 .ranking-header {
     text-align: center;
     margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+    background: #faf9f6;
+    border: 1px solid #d7d2c7;
+    border-radius: 2px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .ranking-header h3 {
-    color: #1e293b;
-    font-size: 1.5rem;
+    color: #16305c;
+    font-size: 1.4rem;
     margin-bottom: 0.5rem;
 }
 
 .ranking-header p {
-    color: #64748b;
+    color: #6b6459;
     font-size: 0.9rem;
 }
 
 .ranking-table {
     background: white;
-    border-radius: 12px;
+    border: 1px solid #d7d2c7;
+    border-radius: 2px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .ranking-table table {
@@ -593,40 +627,40 @@ body {
 }
 
 .ranking-table th {
-    background: #f8fafc;
-    color: #475569;
-    font-weight: 600;
-    padding: 1rem;
+    background: #16305c;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.9rem 1rem;
     text-align: left;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid #0d1f3d;
 }
 
 .ranking-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid #e2ddd1;
     vertical-align: middle;
 }
 
 .ranking-row {
-    transition: background-color 0.2s ease;
+    transition: background-color 0.15s ease;
 }
 
 .ranking-row:hover {
-    background: #f8fafc;
+    background: #faf9f6;
 }
 
 .ranking-row.top-city {
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-    font-weight: 600;
+    background: #eef1f6;
+    font-weight: 700;
 }
 
 .ranking-row.top-city:hover {
-    background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+    background: #dde4ef;
 }
 
 .rank {
     font-weight: 700;
-    color: #1e293b;
+    color: #16305c;
     font-size: 1.1rem;
     text-align: center;
     width: 60px;
@@ -636,8 +670,8 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-weight: 500;
-    color: #1e293b;
+    font-weight: 600;
+    color: #2b2b2b;
 }
 
 .flag {
@@ -653,42 +687,42 @@ body {
 
 .aqi-badge {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: white;
     text-align: center;
     min-width: 60px;
 }
 
 .aqi-badge.good {
-    background: #10b981;
+    background: #2e7d32;
 }
 
 .aqi-badge.moderate {
-    background: #f59e0b;
+    background: #b8860b;
 }
 
 .aqi-badge.unhealthy-sensitive {
-    background: #f97316;
+    background: #c1440e;
 }
 
 .aqi-badge.unhealthy {
-    background: #ef4444;
+    background: #a01919;
 }
 
 .aqi-badge.very-unhealthy {
-    background: #8b5cf6;
+    background: #6a2c8a;
 }
 
 .aqi-badge.hazardous {
-    background: #7c2d12;
+    background: #5c1a1a;
 }
 
 .aqi-category {
     font-size: 0.8rem;
-    color: #64748b;
+    color: #6b6459;
     text-align: right;
 }
 
@@ -706,35 +740,38 @@ body {
 }
 
 .aqi-value-large {
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     line-height: 1;
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .aqi-category-large {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.15rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
 .aqi-description {
-    color: #64748b;
+    color: #6b6459;
     font-size: 0.9rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .pollutant-details {
     flex: 1;
-    background: rgba(255, 255, 255, 0.9);
+    background: #faf9f6;
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d7d2c7;
+    border-radius: 2px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .pollutant-details h4 {
-    color: #1e293b;
+    color: #16305c;
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 .pollutant-item {
@@ -742,7 +779,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2ddd1;
 }
 
 .pollutant-item:last-child {
@@ -750,34 +787,35 @@ body {
 }
 
 .pollutant-name {
-    color: #475569;
-    font-weight: 500;
-}
-
-.pollutant-value {
-    color: #1e293b;
+    color: #3d3830;
     font-weight: 600;
 }
 
+.pollutant-value {
+    color: #16305c;
+    font-weight: 700;
+}
+
 .pollutant-unit {
-    color: #64748b;
+    color: #6b6459;
     font-size: 0.9rem;
     margin-left: 0.25rem;
 }
 
 /* Health Recommendations */
 .health-recommendations {
-    background: rgba(255, 255, 255, 0.9);
+    background: #faf9f6;
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d7d2c7;
+    border-radius: 2px;
     margin-top: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .health-recommendations h4 {
-    color: #1e293b;
+    color: #16305c;
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 .recommendation-item {
@@ -785,7 +823,7 @@ body {
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 0;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2ddd1;
 }
 
 .recommendation-item:last-child {
@@ -793,34 +831,35 @@ body {
 }
 
 .recommendation-icon {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     width: 2rem;
     text-align: center;
 }
 
 .recommendation-text {
-    color: #475569;
-    font-weight: 500;
+    color: #3d3830;
+    font-weight: 600;
 }
 
 /* WHO Guidelines */
 .who-guidelines {
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    background: #eaf3ea;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 2px;
     margin-top: 1rem;
-    border-left: 4px solid #10b981;
+    border-left: 4px solid #2e7d32;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .who-guidelines .checkmark {
-    color: #10b981;
-    font-size: 1.2rem;
+    color: #2e7d32;
+    font-size: 1.1rem;
     margin-right: 0.5rem;
 }
 
 .who-guidelines-text {
-    color: #065f46;
-    font-weight: 500;
+    color: #1e4d21;
+    font-weight: 600;
 }
 
 /* Historical Data Styles */
@@ -829,6 +868,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-bottom: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .history-controls .input-group {
@@ -837,46 +877,47 @@ body {
 }
 
 .history-controls input[type="date"] {
-    padding: 0.75rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+    padding: 0.6rem;
+    border: 1px solid #b9b2a3;
+    border-radius: 2px;
     font-size: 1rem;
     background: white;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.15s ease;
 }
 
 .history-controls input[type="date"]:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: #16305c;
 }
 
 .historical-header {
     text-align: center;
     margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+    background: #faf9f6;
+    border: 1px solid #d7d2c7;
+    border-radius: 2px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .historical-header h3 {
-    color: #1e293b;
-    font-size: 1.5rem;
+    color: #16305c;
+    font-size: 1.4rem;
     margin-bottom: 0.5rem;
 }
 
 .historical-header p {
-    color: #64748b;
+    color: #6b6459;
     font-size: 0.9rem;
     margin: 0.25rem 0;
 }
 
 .historical-chart {
     background: white;
-    border-radius: 12px;
+    border: 1px solid #d7d2c7;
+    border-radius: 2px;
     padding: 1.5rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -890,34 +931,31 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-top: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .stat-card {
     background: white;
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d7d2c7;
+    border-radius: 2px;
     text-align: center;
-    transition: transform 0.2s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-2px);
 }
 
 .stat-card h4 {
-    color: #64748b;
-    font-size: 0.9rem;
+    color: #6b6459;
+    font-size: 0.85rem;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .stat-value {
-    color: #1e293b;
-    font-size: 2rem;
+    color: #16305c;
+    font-size: 1.9rem;
     font-weight: 700;
     line-height: 1;
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 /* Responsive adjustments for historical data */
@@ -925,11 +963,11 @@ body {
     .history-controls {
         grid-template-columns: 1fr;
     }
-    
+
     .historical-stats {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .historical-chart canvas {
         width: 100%;
         height: 300px;
@@ -940,9 +978,9 @@ body {
     .historical-stats {
         grid-template-columns: 1fr;
     }
-    
+
     .stat-value {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 }
 
@@ -952,29 +990,17 @@ body {
     top: 20px;
     right: 20px;
     z-index: 1000;
-    max-width: 350px;
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    animation: slideInRight 0.5s ease-out;
-}
-
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+    max-width: 340px;
+    background: #ffffff;
+    border: 1px solid #d7d2c7;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .widget-content {
-    padding: 1.5rem;
-    color: #1f2937;
+    padding: 1.25rem;
+    color: #2b2b2b;
 }
 
 .aqi-section {
@@ -985,39 +1011,39 @@ body {
 }
 
 .aqi-badge {
-    background: #10b981;
+    background: #2e7d32;
     color: white;
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    border-radius: 2px;
     text-align: center;
     min-width: 80px;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .aqi-value {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
     line-height: 1;
     margin-bottom: 0.25rem;
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .aqi-label {
     font-size: 0.7rem;
     opacity: 0.9;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .aqi-category {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2b2b2b;
     flex: 1;
     text-align: center;
     margin: 0 1rem;
 }
 
 .user-icon {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     opacity: 0.7;
 }
 
@@ -1027,11 +1053,11 @@ body {
     align-items: center;
     margin-top: 0.5rem;
     font-size: 0.7rem;
-    color: #6b7280;
+    color: #6b6459;
 }
 
 .last-updated {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .update-indicator {
@@ -1041,14 +1067,9 @@ body {
     display: none;
 }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
 .divider {
     height: 1px;
-    background: rgba(31, 41, 55, 0.1);
+    background: #e2ddd1;
     margin: 1rem 0;
 }
 
@@ -1067,23 +1088,24 @@ body {
 
 .pollutant-label {
     font-size: 0.8rem;
-    color: #6b7280;
-    font-weight: 500;
+    color: #6b6459;
+    font-weight: 600;
 }
 
 .pollutant-name {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: #1f2937;
+    font-weight: 700;
+    color: #2b2b2b;
 }
 
 .pollutant-concentration {
     font-size: 1rem;
     font-weight: 700;
-    color: #1f2937;
-    background: rgba(255, 255, 255, 0.3);
+    color: #2b2b2b;
+    background: #f4f2ee;
     padding: 0.5rem 0.75rem;
-    border-radius: 8px;
+    border-radius: 2px;
+    border: 1px solid #e2ddd1;
 }
 
 .weather-section {
@@ -1100,72 +1122,68 @@ body {
     flex: 1;
 }
 
-.weather-icon {
-    font-size: 1.2rem;
-    opacity: 0.8;
+.weather-label {
+    font-size: 0.7rem;
+    color: #6b6459;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .weather-value {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: #1f2937;
+    font-weight: 700;
+    color: #2b2b2b;
     text-align: center;
 }
 
 /* Widget AQI Color Variations */
 .location-widget .aqi-badge.good {
-    background: #10b981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    background: #2e7d32;
 }
 
 .location-widget .aqi-badge.moderate {
-    background: #f59e0b;
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    background: #b8860b;
 }
 
 .location-widget .aqi-badge.unhealthy-sensitive {
-    background: #f97316;
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    background: #c1440e;
 }
 
 .location-widget .aqi-badge.unhealthy {
-    background: #ef4444;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    background: #a01919;
 }
 
 .location-widget .aqi-badge.very-unhealthy {
-    background: #8b5cf6;
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    background: #6a2c8a;
 }
 
 .location-widget .aqi-badge.hazardous {
-    background: #7c2d12;
-    box-shadow: 0 4px 12px rgba(124, 45, 18, 0.3);
+    background: #5c1a1a;
 }
 
-/* Widget Background Variations */
+/* Widget border accent by category, in place of gradient backgrounds */
 .location-widget.good {
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border-left: 4px solid #2e7d32;
 }
 
 .location-widget.moderate {
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 4px solid #b8860b;
 }
 
 .location-widget.unhealthy-sensitive {
-    background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+    border-left: 4px solid #c1440e;
 }
 
 .location-widget.unhealthy {
-    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+    border-left: 4px solid #a01919;
 }
 
 .location-widget.very-unhealthy {
-    background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+    border-left: 4px solid #6a2c8a;
 }
 
 .location-widget.hazardous {
-    background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+    border-left: 4px solid #5c1a1a;
 }
 
 /* Close button for widget */
@@ -1173,23 +1191,23 @@ body {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
+    background: #f4f2ee;
+    border: 1px solid #d7d2c7;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 0.8rem;
-    color: #6b7280;
-    transition: all 0.2s ease;
+    color: #6b6459;
+    transition: background-color 0.15s ease;
 }
 
 .widget-close:hover {
-    background: rgba(255, 255, 255, 0.5);
-    color: #1f2937;
+    background: #e2ddd1;
+    color: #2b2b2b;
 }
 
 /* Responsive widget */
@@ -1201,11 +1219,11 @@ body {
         left: 10px;
         max-width: none;
     }
-    
+
     .weather-section {
         gap: 0.5rem;
     }
-    
+
     .weather-value {
         font-size: 0.8rem;
     }

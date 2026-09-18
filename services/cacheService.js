@@ -13,12 +13,21 @@ class CacheService {
       this.redisClient = redis.createClient({
         socket: {
           host: process.env.REDIS_HOST || 'localhost',
-          port: process.env.REDIS_PORT || 6379
+          port: process.env.REDIS_PORT || 6379,
+          reconnectStrategy: (retries) => {
+            if (retries > 3) {
+              console.log('Redis unavailable, using in-memory cache');
+              return false;
+            }
+            return Math.min(retries * 100, 1000);
+          }
         }
       });
 
       this.redisClient.on('error', (err) => {
-        console.log('Redis Client Error:', err);
+        if (this.isRedisConnected) {
+          console.log('Redis Client Error:', err.message);
+        }
         this.isRedisConnected = false;
       });
 

@@ -1,284 +1,164 @@
-# 🌍 NASA TEMPO Air Quality Monitoring App
+# NASA TEMPO Air Quality Monitor
 
-A comprehensive real-time air quality monitoring application using NASA TEMPO satellite data, ground-based measurements, and weather data integration.
+Real-time air quality monitoring built on NASA TEMPO satellite data, ground-based
+measurements and weather data. Node.js/Express backend, vanilla JS frontend,
+Socket.IO for live updates, Redis-backed caching with an automatic in-memory
+fallback.
 
-## 🚀 Features
+## Features
 
-### Core Functionality
-- **Real-time Air Quality Monitoring** - Current AQI data with detailed pollutant breakdown
-- **NASA TEMPO Integration** - Satellite-based pollution monitoring
-- **Weather Integration** - OpenWeatherMap API for comprehensive weather data
-- **City Ranking System** - Global air quality rankings with coordinates
-- **Historical Data Visualization** - Interactive charts and trends
-- **Location Widget** - Compact floating widget with auto-update
+- Real-time AQI lookup by coordinates, with pollutant breakdown (PM2.5, PM10,
+  ozone, NO2, SO2, CO) and WHO-based health recommendations
+- 5-day air quality forecast
+- City ranking by country
+- Historical data view with charts
+- Email alert subscriptions (Gmail SMTP via Nodemailer)
+- Live updates over WebSocket (Socket.IO)
+- JWT-based user accounts (register/login/profile)
 
-### Notification System
-- **Email Alerts** - Gmail SMTP integration with HTML templates
-- **Test Notifications** - Immediate confirmation emails after subscription
-- **Real-time Updates** - WebSocket-based live notifications
-- **Multi-level Alerts** - Configurable alert thresholds
+## Tech stack
 
-### User Experience
-- **Responsive Design** - Modern UI with mobile-first approach
-- **Geolocation Support** - Automatic location detection with fallback options
-- **Interactive Maps** - Visual representation of air quality data
-- **Health Recommendations** - WHO guidelines and health advice
+- **Backend:** Node.js, Express, Socket.IO, Redis (optional, falls back to an
+  in-memory cache), JWT, bcrypt, Nodemailer
+- **Frontend:** Static HTML/CSS/JavaScript (no build step)
+- **Deployment:** Docker, Docker Compose
 
-## 🛠️ Technology Stack
+## Project structure
 
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **Socket.io** - Real-time communication
-- **Redis** - Caching and session management
-- **Nodemailer** - Email service integration
+```
+.
+├── server.js                # App entry point
+├── routes/                  # Express routers (air quality, weather, tempo, notifications, users)
+├── services/                # Business logic (cache, TEMPO/weather clients, notifications, users)
+├── middleware/               # Auth + request validation
+├── public/                  # Static frontend (HTML/CSS/JS)
+├── Dockerfile
+├── docker-compose.yml
+└── env.example              # Environment variable template
+```
 
-### Frontend
-- **HTML5/CSS3** - Modern web standards
-- **JavaScript ES6+** - Interactive functionality
-- **Canvas API** - Data visualization
-- **Geolocation API** - Location services
-
-### APIs & Services
-- **NASA TEMPO API** - Satellite air quality data
-- **OpenWeatherMap API** - Weather information
-- **Gmail SMTP** - Email notifications
-
-## 📦 Installation
+## Getting started
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- Redis (optional, falls back to in-memory cache)
-- Git
 
-### Quick Start
+- Node.js 18+
+- npm
+- Docker (optional, for containerized deployment)
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Alishnis/nasaspace-app.git
-   cd nasaspace-app
-   ```
+### Local development
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**
-   ```bash
-   cp env.example .env
-   # Edit .env with your API keys
-   ```
-
-4. **Start the application**
-   ```bash
-   npm start
-   # or for development
-   npm run dev
-   ```
-
-5. **Access the application**
-   - Open http://localhost:3003
-   - Start monitoring air quality!
-
-## 🔧 Configuration
-
-### Environment Variables
-
-The application includes all necessary API keys for immediate use:
-
-```env
-# Server Configuration
-PORT=3003
-NODE_ENV=development
-
-# NASA TEMPO API (Included)
-NASA_TEMPO_API_KEY=rpDFc3APJjZmiaAjRtRND9vFo3xF0MFWAPxQOxBC
-NASA_TEMPO_BASE_URL=https://api.nasa.gov/insight_weather
-
-# Weather API (Included)
-WEATHER_API_KEY=45715ae2f073ea19d11f2a1e434236fe
-WEATHER_API_URL=https://api.openweathermap.org/data/2.5
-
-# Email Configuration (Gmail SMTP)
-EMAIL_SERVICE=gmail
-EMAIL_USER=romankulalisher@gmail.com
-EMAIL_PASS=oszy mfrw goyl prag
-
-# Database (Optional)
-MONGODB_URI=mongodb://localhost:27017/air-quality-monitor
-REDIS_URL=redis://localhost:6379
-
-# Security
-JWT_SECRET=56e82a4b97abf742543f7c8c98ec2b15b1db4e2a3e1be0b10fa1a650e4b78950
-ENCRYPTION_KEY=6f7c40e96f58b7d29551098d7bda4c2f869ad88fe1d2be556ae9b0d4986cb389
+```bash
+git clone https://github.com/Alishnis/nasaspace-app.git
+cd nasaspace-app
+npm install
+cp env.example .env
+# edit .env with your own API keys
+npm run dev
 ```
 
-## 🌟 Key Features Explained
+The app listens on `http://localhost:3003` by default. `/health` returns a
+basic status check.
 
-### 1. Real-time Air Quality Monitoring
-- **Current AQI Display** - Live air quality index with color-coded categories
-- **Pollutant Breakdown** - PM2.5, PM10, Ozone, NO2, SO2, CO concentrations
-- **Health Recommendations** - WHO guidelines and safety advice
-- **Location-based Data** - Accurate readings for specific coordinates
+Redis is optional for local development — if it isn't reachable, the app
+automatically falls back to an in-memory cache and logs a single notice
+instead of retrying indefinitely.
 
-### 2. City Ranking System
-- **Global Rankings** - Air quality comparison across cities
-- **Coordinate Display** - Precise location coordinates for each city
-- **Country Filtering** - Filter rankings by country
-- **Real-time Updates** - Live ranking updates
+### Environment variables
 
-### 3. Historical Data Visualization
-- **Interactive Charts** - Canvas-based data visualization
-- **Date Range Selection** - Custom time period analysis
-- **Trend Analysis** - Air quality patterns over time
-- **Export Capabilities** - Data export functionality
+See [env.example](env.example) for the full list. The important ones:
 
-### 4. Notification System
-- **Email Alerts** - HTML-formatted email notifications
-- **Test Notifications** - Immediate confirmation after subscription
-- **Real-time Updates** - WebSocket-based live alerts
-- **Multi-channel Support** - Email and SMS notifications
+| Variable | Description | Required |
+|---|---|---|
+| `PORT` | HTTP port (default `3003`) | no |
+| `TEMPO_API_KEY` | NASA TEMPO / api.nasa.gov key | no (falls back to `DEMO_KEY` demo data) |
+| `TEMPO_API_URL` | NASA TEMPO API base URL | no |
+| `WEATHER_API_KEY` | OpenWeatherMap API key | no (falls back to simulated weather data) |
+| `EMAIL_SERVICE`, `EMAIL_USER`, `EMAIL_PASS` | SMTP credentials for alert emails | no (notifications are skipped if unset) |
+| `JWT_SECRET` | Secret used to sign auth tokens | yes, for production |
+| `REDIS_HOST`, `REDIS_PORT` | Redis connection | no |
 
-### 5. Location Widget
-- **Floating Widget** - Compact air quality display
-- **Auto-update** - Automatic data refresh every 5 minutes
-- **Weather Integration** - Temperature, humidity, wind speed
-- **Responsive Design** - Mobile-optimized interface
+**Never commit your real `.env` file.** It's git-ignored — use `env.example`
+as the template and keep actual secrets out of version control.
 
-## 🚀 Deployment
+## Docker deployment
 
-### Docker Deployment
+### Docker Compose (recommended)
+
+Runs the app together with Redis:
+
 ```bash
-# Build the container
+cp env.example .env
+# edit .env with your production values
+docker-compose up -d --build
+```
+
+The app will be available on `http://localhost:3003`, and the container
+reports healthy once `GET /health` responds (see `HEALTHCHECK` in the
+[Dockerfile](Dockerfile)).
+
+Stop it with:
+
+```bash
+docker-compose down
+```
+
+### Plain Docker
+
+```bash
 docker build -t nasa-air-quality .
-
-# Run the container
-docker run -p 3003:3003 nasa-air-quality
+docker run -p 3003:3003 --env-file .env nasa-air-quality
 ```
 
-### Docker Compose
+## API endpoints
+
+### Air quality — `/api/air-quality`
+- `GET /current?lat=&lng=` — current AQI and pollutant breakdown
+- `GET /forecast?lat=&lng=&days=` — multi-day forecast
+- `GET /historical?lat=&lng=&startDate=&endDate=` — historical data
+- `GET /alerts?lat=&lng=` — active alerts for a location
+- `GET /ranking?country=` — city ranking for a country
+
+### Weather — `/api/weather`
+- `GET /current?lat=&lng=`
+- `GET /forecast?lat=&lng=`
+- `GET /historical?lat=&lng=`
+
+### TEMPO satellite data — `/api/tempo`
+- `GET /data?lat=&lng=`
+- `GET /data/:date?lat=&lng=`
+- `GET /coverage?lat=&lng=`
+
+### Notifications — `/api/notifications`
+- `POST /subscribe` — `{ lat, lng, email?, phone?, alertLevels }`
+- `DELETE /unsubscribe/:subscriptionId`
+- `GET /preferences/:userId`
+- `PUT /preferences/:userId`
+- `POST /test`
+
+### Users — `/api/users`
+- `POST /register` — `{ name, email, password }`
+- `POST /login` — `{ email, password }`
+- `GET /profile` — requires `Authorization: Bearer <token>`
+- `PUT /profile` — requires auth
+- `DELETE /account` — requires auth
+
+### Health
+- `GET /health` — `{ status, timestamp, uptime }`
+
+## Testing the API
+
 ```bash
-# Start all services
-docker-compose up -d
+curl "http://localhost:3003/api/air-quality/current?lat=40.7128&lng=-74.0060"
 ```
 
-### Production Deployment
-1. **Set environment variables** on your server
-2. **Configure email service** for notifications
-3. **Set up Redis** for caching (optional)
-4. **Deploy using PM2** for process management
+## Security notes
 
-## 📊 API Endpoints
+- Requests are rate-limited (100 requests / 15 min per IP on `/api/*`) via
+  `express-rate-limit`, and `helmet` sets standard security headers.
+- Rotate `JWT_SECRET`, `TEMPO_API_KEY`, `WEATHER_API_KEY` and email
+  credentials before deploying publicly — never reuse values that were ever
+  committed to version control.
 
-### Air Quality
-- `GET /api/air-quality/current` - Current air quality data
-- `GET /api/air-quality/forecast` - Air quality forecast
-- `GET /api/air-quality/historical` - Historical data
-- `GET /api/air-quality/ranking` - City rankings
+## License
 
-### Weather
-- `GET /api/weather/current` - Current weather data
-- `GET /api/weather/forecast` - Weather forecast
-
-### Notifications
-- `POST /api/notifications/subscribe` - Subscribe to alerts
-- `GET /api/notifications/subscriptions` - Get subscriptions
-
-## 🎯 Usage Examples
-
-### 1. Monitor Current Air Quality
-```javascript
-// Get air quality for specific coordinates
-const response = await fetch('/api/air-quality/current?lat=40.7128&lng=-74.0060');
-const data = await response.json();
-console.log(`AQI: ${data.aqi} - ${data.category}`);
-```
-
-### 2. Subscribe to Alerts
-```javascript
-// Subscribe to air quality alerts
-const subscription = await fetch('/api/notifications/subscribe', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    lat: 40.7128,
-    lng: -74.0060,
-    email: 'user@example.com',
-    alertLevels: ['unhealthy', 'very-unhealthy', 'hazardous']
-  })
-});
-```
-
-### 3. Get City Rankings
-```javascript
-// Get city rankings for specific country
-const rankings = await fetch('/api/air-quality/ranking?country=US');
-const data = await rankings.json();
-console.log(data.cities);
-```
-
-## 🔒 Security Features
-
-- **Rate Limiting** - API request throttling
-- **Input Validation** - Comprehensive data validation
-- **CORS Protection** - Cross-origin request security
-- **Helmet.js** - Security headers
-- **JWT Authentication** - Secure user sessions
-
-## 📱 Mobile Support
-
-- **Responsive Design** - Mobile-first approach
-- **Touch-friendly Interface** - Optimized for touch devices
-- **Geolocation Support** - GPS integration
-- **Offline Capabilities** - Cached data support
-
-## 🧪 Testing
-
-### Test Notifications
-```bash
-# Run notification tests
-node test-notification.js
-```
-
-### API Testing
-```bash
-# Test API endpoints
-curl http://localhost:3003/api/air-quality/current?lat=40.7128&lng=-74.0060
-```
-
-## 📈 Performance
-
-- **Redis Caching** - Fast data retrieval
-- **In-memory Fallback** - No Redis required
-- **Optimized Queries** - Efficient data processing
-- **CDN Ready** - Static asset optimization
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue on GitHub
-- Check the documentation
-- Review the API endpoints
-
-## 🌟 Acknowledgments
-
-- **NASA** - For TEMPO satellite data
-- **OpenWeatherMap** - For weather data
-- **WHO** - For air quality guidelines
-- **Community** - For feedback and contributions
-
----
-
-**Ready to monitor air quality? Start the app and breathe easier! 🌍✨**
+MIT
