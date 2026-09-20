@@ -5,6 +5,8 @@ measurements and weather data. Node.js/Express backend, vanilla JS frontend,
 Socket.IO for live updates, Redis-backed caching with an automatic in-memory
 fallback.
 
+**Live demo:** https://nasaspace-app-tmpalish.azurewebsites.net
+
 ## Screenshots
 
 | Monitor | Forecast |
