@@ -28,9 +28,9 @@ class AirQualityApp {
         });
 
         document.getElementById('getCurrentLocation').addEventListener('click', () => {
-            this.getCurrentLocation();
+            this.useCurrentLocation('lat', 'lng', true);
         });
-        
+
         document.getElementById('cancelLocation').addEventListener('click', () => {
             this.cancelLocationRequest();
         });
@@ -38,6 +38,10 @@ class AirQualityApp {
         // Forecast section
         document.getElementById('getForecast').addEventListener('click', () => {
             this.getForecast();
+        });
+
+        document.getElementById('useCurrentLocationForecast').addEventListener('click', () => {
+            this.useCurrentLocation('forecastLat', 'forecastLng');
         });
 
         // Ranking section
@@ -48,6 +52,10 @@ class AirQualityApp {
         // History section
         document.getElementById('getHistory').addEventListener('click', () => {
             this.getHistoricalData();
+        });
+
+        document.getElementById('useCurrentLocationHistory').addEventListener('click', () => {
+            this.useCurrentLocation('historyLat', 'historyLng');
         });
 
         // Location Widget
@@ -65,7 +73,7 @@ class AirQualityApp {
         });
         
         document.getElementById('useCurrentLocationAlert').addEventListener('click', () => {
-            this.getCurrentLocationForAlert();
+            this.useCurrentLocation('alertLat', 'alertLng');
         });
 
         // Auth forms
@@ -110,16 +118,19 @@ class AirQualityApp {
         this.currentSection = sectionName;
     }
 
-    async getCurrentLocation() {
+    // Shared "use my current location" handler for any lat/lng field pair.
+    // showCancel controls whether the Monitor tab's cancel button is toggled.
+    async useCurrentLocation(latFieldId, lngFieldId, showCancel = false) {
         if (!navigator.geolocation) {
             this.showError('Geolocation is not supported by this browser.');
             return;
         }
 
         this.showLoading('Getting your location...');
-        
-        // Show cancel button
-        document.getElementById('cancelLocation').style.display = 'inline-block';
+
+        if (showCancel) {
+            document.getElementById('cancelLocation').style.display = 'inline-block';
+        }
 
         try {
             const position = await new Promise((resolve, reject) => {
@@ -158,19 +169,23 @@ class AirQualityApp {
                 throw new Error('Invalid coordinates received');
             }
 
-            document.getElementById('lat').value = lat.toFixed(6);
-            document.getElementById('lng').value = lng.toFixed(6);
+            document.getElementById(latFieldId).value = lat.toFixed(6);
+            document.getElementById(lngFieldId).value = lng.toFixed(6);
 
             this.hideLoading();
-            document.getElementById('cancelLocation').style.display = 'none';
+            if (showCancel) {
+                document.getElementById('cancelLocation').style.display = 'none';
+            }
             this.showSuccess(`Location detected: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
         } catch (error) {
             this.hideLoading();
-            document.getElementById('cancelLocation').style.display = 'none';
-            
+            if (showCancel) {
+                document.getElementById('cancelLocation').style.display = 'none';
+            }
+
             let errorMessage = 'Unable to get your location. ';
             let suggestion = '';
-            
+
             if (error.message === 'Location request timed out') {
                 errorMessage += 'Location request timed out. ';
                 suggestion = 'Try moving to a location with better GPS signal or enter coordinates manually.';
@@ -186,12 +201,12 @@ class AirQualityApp {
             } else {
                 suggestion = 'Please enter coordinates manually or try again later.';
             }
-            
+
             errorMessage += suggestion;
-            
+
             this.showError(errorMessage);
             console.error('Geolocation error:', error);
-            
+
             // Show helpful suggestions
             this.showLocationSuggestions();
         }
@@ -225,84 +240,6 @@ class AirQualityApp {
         const errorDiv = document.querySelector('.alert-danger');
         if (errorDiv) {
             errorDiv.innerHTML += suggestions;
-        }
-    }
-
-    async getCurrentLocationForAlert() {
-        if (!navigator.geolocation) {
-            this.showError('Geolocation is not supported by this browser.');
-            return;
-        }
-
-        this.showLoading('Getting your location...');
-
-        try {
-            const position = await new Promise((resolve, reject) => {
-                // Add timeout to prevent infinite loading
-                const timeoutId = setTimeout(() => {
-                    reject(new Error('Location request timed out'));
-                }, 10000); // 10 second timeout
-
-                navigator.geolocation.getCurrentPosition(
-                    (pos) => {
-                        clearTimeout(timeoutId);
-                        resolve(pos);
-                    },
-                    (error) => {
-                        clearTimeout(timeoutId);
-                        reject(error);
-                    },
-                    {
-                        enableHighAccuracy: false, // Try with lower accuracy first
-                        timeout: 15000, // Increased timeout
-                        maximumAge: 600000 // 10 minutes cache
-                    }
-                );
-            });
-
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-
-            // Validate coordinates
-            if (isNaN(lat) || isNaN(lng) || lat === 0 || lng === 0) {
-                throw new Error('Invalid coordinates received');
-            }
-
-            document.getElementById('alertLat').value = lat.toFixed(6);
-            document.getElementById('alertLng').value = lng.toFixed(6);
-
-            this.hideLoading();
-            this.showSuccess(`Location detected: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
-        } catch (error) {
-            this.hideLoading();
-            document.getElementById('cancelLocation').style.display = 'none';
-            
-            let errorMessage = 'Unable to get your location. ';
-            let suggestion = '';
-            
-            if (error.message === 'Location request timed out') {
-                errorMessage += 'Location request timed out. ';
-                suggestion = 'Try moving to a location with better GPS signal or enter coordinates manually.';
-            } else if (error.code === 1) {
-                errorMessage += 'Location access denied. ';
-                suggestion = 'Please allow location access in your browser settings or enter coordinates manually.';
-            } else if (error.code === 2) {
-                errorMessage += 'Location unavailable. ';
-                suggestion = 'Your device may not have GPS or location services may be disabled. Please enter coordinates manually.';
-            } else if (error.message === 'Invalid coordinates received') {
-                errorMessage += 'Invalid location data received. ';
-                suggestion = 'Please try again or enter coordinates manually.';
-            } else {
-                suggestion = 'Please enter coordinates manually or try again later.';
-            }
-            
-            errorMessage += suggestion;
-            
-            this.showError(errorMessage);
-            console.error('Geolocation error:', error);
-            
-            // Show helpful suggestions
-            this.showLocationSuggestions();
         }
     }
 
@@ -765,17 +702,19 @@ class AirQualityApp {
         ctx.lineTo(padding, height - padding);
         ctx.stroke();
         
+        if (data.length === 0) return;
+
+        const stepX = data.length > 1 ? chartWidth / (data.length - 1) : 0;
+        const maxAQI = Math.max(...data.map(d => d.aqi));
+        const minAQI = Math.min(...data.map(d => d.aqi));
+        const aqiRange = maxAQI - minAQI || 1;
+
         // Draw AQI line
-        if (data.length > 0) {
-            ctx.strokeStyle = '#3b82f6';
+        {
+            ctx.strokeStyle = '#16305c';
             ctx.lineWidth = 2;
             ctx.beginPath();
-            
-            const stepX = chartWidth / (data.length - 1);
-            const maxAQI = Math.max(...data.map(d => d.aqi));
-            const minAQI = Math.min(...data.map(d => d.aqi));
-            const aqiRange = maxAQI - minAQI || 1;
-            
+
             data.forEach((point, index) => {
                 const x = padding + index * stepX;
                 const y = height - padding - ((point.aqi - minAQI) / aqiRange) * chartHeight;
@@ -790,7 +729,7 @@ class AirQualityApp {
             ctx.stroke();
             
             // Draw points
-            ctx.fillStyle = '#3b82f6';
+            ctx.fillStyle = '#16305c';
             data.forEach((point, index) => {
                 const x = padding + index * stepX;
                 const y = height - padding - ((point.aqi - minAQI) / aqiRange) * chartHeight;

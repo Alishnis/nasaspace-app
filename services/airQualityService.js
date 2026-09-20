@@ -137,12 +137,22 @@ class AirQualityService {
       // Implementation for historical data
       // This would typically query a database with historical measurements
       const historicalData = await this.queryHistoricalData(lat, lng, startDate, endDate);
-      
+
+      const aqiValues = historicalData.map(d => d.aqi);
+      const averageAQI = aqiValues.reduce((sum, aqi) => sum + aqi, 0) / (aqiValues.length || 1);
+      const highestAQI = Math.max(...aqiValues);
+      const lowestAQI = Math.min(...aqiValues);
+      const goodDays = historicalData.filter(d => d.aqi <= 50).length;
+
       const result = {
         location: { lat, lng },
         startDate,
         endDate,
-        data: historicalData,
+        historicalData,
+        averageAQI,
+        highestAQI,
+        lowestAQI,
+        goodDays,
         generatedAt: new Date().toISOString()
       };
 

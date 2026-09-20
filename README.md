@@ -5,6 +5,16 @@ measurements and weather data. Node.js/Express backend, vanilla JS frontend,
 Socket.IO for live updates, Redis-backed caching with an automatic in-memory
 fallback.
 
+## Screenshots
+
+| Monitor | Forecast |
+|---|---|
+| ![Monitor](docs/screenshots/monitor.png) | ![Forecast](docs/screenshots/forecast.png) |
+
+| City ranking | Historical data |
+|---|---|
+| ![Ranking](docs/screenshots/ranking.png) | ![History](docs/screenshots/history.png) |
+
 ## Features
 
 - Real-time AQI lookup by coordinates, with pollutant breakdown (PM2.5, PM10,
@@ -107,6 +117,16 @@ docker-compose down
 ```bash
 docker build -t nasa-air-quality .
 docker run -p 3003:3003 --env-file .env nasa-air-quality
+```
+
+### Pre-built image (Docker Hub)
+
+A ready-to-run image is published at
+[hub.docker.com/r/tmpalish/nasaspace-app](https://hub.docker.com/r/tmpalish/nasaspace-app):
+
+```bash
+docker pull tmpalish/nasaspace-app:latest
+docker run -p 3003:3003 --env-file .env tmpalish/nasaspace-app:latest
 ```
 
 ## API endpoints
