@@ -76,10 +76,13 @@ app.set('io', io);
 
 const PORT = process.env.PORT || 3003;
 
-server.listen(PORT, () => {
-  console.log(`🚀 NASA TEMPO Air Quality Monitor running on port ${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/health`);
-  console.log(`🌐 Web interface: http://localhost:${PORT}`);
-});
+// Only start listening when run directly (`node server.js`), so tests can import the app
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`🚀 NASA TEMPO Air Quality Monitor running on port ${PORT}`);
+    console.log(`📊 Health check: http://localhost:${PORT}/health`);
+    console.log(`🌐 Web interface: http://localhost:${PORT}`);
+  });
+}
 
 module.exports = { app, server, io };

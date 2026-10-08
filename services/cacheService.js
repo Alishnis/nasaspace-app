@@ -64,9 +64,11 @@ class CacheService {
       } else {
         this.memoryCache.set(key, value);
         // Set TTL for memory cache
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           this.memoryCache.delete(key);
         }, ttl * 1000);
+        // Don't keep the process alive just for cache expiry
+        timer.unref();
       }
     } catch (error) {
       console.error('Cache set error:', error);
