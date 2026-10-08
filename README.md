@@ -159,4 +159,4 @@ TODO(owner): describe your contribution (e.g. team size, which parts you built) 
 
 ## License
 
-MIT, as declared in `package.json`. TODO(owner): add a `LICENSE` file (none exists in the repo yet).
+MIT, see [LICENSE](LICENSE).
