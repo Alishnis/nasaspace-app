@@ -158,7 +158,8 @@ class NotificationService {
   async sendTestNotificationAfterSubscription(subscription) {
     try {
       // Get real air quality data for the subscription location
-      const airQualityService = require('./airQualityService');
+      const AirQualityService = require('./airQualityService');
+      const airQualityService = new AirQualityService();
       let realAirQuality;
       
       try {

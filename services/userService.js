@@ -1,10 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const jwtSecret = require('./jwtSecret');
 
 class UserService {
   constructor() {
     this.users = new Map(); // In production, use a database
-    this.jwtSecret = process.env.JWT_SECRET || 'your-secret-key';
+    this.jwtSecret = jwtSecret;
   }
 
   async registerUser({ email, password, name }) {
@@ -160,4 +161,4 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+module.exports = new UserService();

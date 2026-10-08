@@ -263,7 +263,7 @@ class WebSocketService {
         if ('Notification' in window && Notification.permission === 'granted') {
             new Notification(data.title, {
                 body: data.message,
-                icon: '/images/icon.png'
+                icon: '/images/apple-touch-icon.png'
             });
         }
     }
