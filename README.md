@@ -147,7 +147,7 @@ Please read before treating any number in the app as real.
 
 - **No real data source is wired up.** TEMPO, weather and ground-station values are generated with formulas plus `Math.random()` in `services/`. `TEMPO_API_KEY` and `WEATHER_API_KEY` are never used to make a request. Historical data is random, and the city ranking is a hardcoded list.
 - The AQI calculation is a simplified approximation, not the official EPA method (see comments in `services/airQualityService.js`).
-- **Alerts are not sent automatically.** Only a welcome email is sent on subscription; `checkAndSendAlerts` is never called. SMS and push are placeholders that only log.
+- **Alerts are not sent automatically.** Only a welcome email is sent on subscription; there is no logic that dispatches alerts when air quality changes. SMS and push are placeholders that only log.
 - **Socket.IO live updates are not functional:** the client listens for `air-quality-update` and `alert`, but the server never emits them.
 - Users and subscriptions are stored in memory and are lost on restart; there is no database.
 - `public/js/map.js` (Leaflet map helper) is loaded but Leaflet itself is not included, so no map is shown.

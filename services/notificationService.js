@@ -209,60 +209,6 @@ class NotificationService {
     }
   }
 
-  async checkAndSendAlerts(location, airQualityData) {
-    try {
-      const { lat, lng } = location;
-      
-      // Find subscriptions for this location
-      const relevantSubscriptions = Array.from(this.subscriptions.values())
-        .filter(sub => 
-          sub.isActive && 
-          Math.abs(sub.location.lat - lat) < 0.1 && 
-          Math.abs(sub.location.lng - lng) < 0.1
-        );
-
-      for (const subscription of relevantSubscriptions) {
-        const shouldAlert = this.shouldSendAlert(subscription, airQualityData);
-        
-        if (shouldAlert) {
-          await this.sendAirQualityAlert(subscription, airQualityData);
-        }
-      }
-
-      // Send real-time updates via WebSocket
-      this.sendRealtimeUpdate(location, airQualityData);
-
-    } catch (error) {
-      console.error('Error checking and sending alerts:', error);
-    }
-  }
-
-  async sendAirQualityAlert(subscription, airQualityData) {
-    try {
-      const alertMessage = {
-        title: `Air Quality Alert: ${airQualityData.category}`,
-        message: this.generateAlertMessage(airQualityData),
-        aqi: airQualityData.aqi,
-        category: airQualityData.category,
-        recommendations: airQualityData.recommendations,
-        timestamp: new Date().toISOString()
-      };
-
-      // Send email notification
-      if (subscription.email) {
-        await this.sendEmailNotification(subscription.email, alertMessage);
-      }
-
-      // Send SMS notification
-      if (subscription.phone) {
-        await this.sendSMSNotification(subscription.phone, alertMessage);
-      }
-
-    } catch (error) {
-      console.error('Error sending air quality alert:', error);
-    }
-  }
-
   async sendEmailNotification(email, message) {
     try {
       const mailOptions = {
@@ -304,33 +250,6 @@ class NotificationService {
       console.error('Error sending push notification:', error);
       throw error;
     }
-  }
-
-  sendRealtimeUpdate(location, airQualityData) {
-    // This would be called from the main server with io instance
-    // For now, just log the update
-    console.log(`Real-time update for ${location.lat}, ${location.lng}: AQI ${airQualityData.aqi}`);
-  }
-
-  shouldSendAlert(subscription, airQualityData) {
-    const { alertLevels } = subscription;
-    const { category } = airQualityData;
-    
-    return alertLevels.includes(category.toLowerCase().replace(/\s+/g, '-'));
-  }
-
-  generateAlertMessage(airQualityData) {
-    return `
-      Air Quality Alert: ${airQualityData.category}
-      AQI: ${airQualityData.aqi}
-      
-      ${airQualityData.healthMessage}
-      
-      Recommendations:
-      ${airQualityData.recommendations.map(rec => `• ${rec}`).join('\n')}
-      
-      Stay safe and check air quality regularly!
-    `.trim();
   }
 
   generateEmailHTML(message) {

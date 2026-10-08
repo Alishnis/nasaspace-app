@@ -18,22 +18,6 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-const requireAdmin = (req, res, next) => {
-  if (!req.user || req.user.role !== 'admin') {
-    return res.status(403).json({ error: 'Admin access required' });
-  }
-  next();
-};
-
-const requireUser = (req, res, next) => {
-  if (!req.user || !req.user.id) {
-    return res.status(401).json({ error: 'User authentication required' });
-  }
-  next();
-};
-
 module.exports = {
-  authenticateToken,
-  requireAdmin,
-  requireUser
+  authenticateToken
 };

@@ -34,43 +34,6 @@ const validateLocation = (req, res, next) => {
   next();
 };
 
-const validateEmail = (req, res, next) => {
-  const { email } = req.body;
-  
-  if (!email) {
-    return res.status(400).json({ 
-      error: 'Email is required' 
-    });
-  }
-  
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({ 
-      error: 'Invalid email format' 
-    });
-  }
-  
-  next();
-};
-
-const validatePassword = (req, res, next) => {
-  const { password } = req.body;
-  
-  if (!password) {
-    return res.status(400).json({ 
-      error: 'Password is required' 
-    });
-  }
-  
-  if (password.length < 8) {
-    return res.status(400).json({ 
-      error: 'Password must be at least 8 characters long' 
-    });
-  }
-  
-  next();
-};
-
 const validateSubscription = (req, res, next) => {
   const { email, phone, alertLevels } = req.body;
   
@@ -109,7 +72,5 @@ const validateSubscription = (req, res, next) => {
 
 module.exports = {
   validateLocation,
-  validateEmail,
-  validatePassword,
   validateSubscription
 };
