@@ -1,0 +1,74 @@
+name: Deploy to Hugging Face Space
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - server.js
+      - package.json
+      - package-lock.json
+      - healthcheck.js
+      - Dockerfile
+      - routes/**
+      - services/**
+      - middleware/**
+      - public/**
+      - scripts/stage_hf_space.sh
+      - .github/workflows/deploy-hf-space.yml
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hf-space
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HF_SPACE_ID: ${{ vars.HF_SPACE_ID }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - name: Check configuration
+        id: cfg
+        run: |
+          if [ -z "$HF_SPACE_ID" ]; then
+            echo "HF_SPACE_ID variable is not set; skipping deploy."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          elif [ -z "$HF_TOKEN" ]; then
+            echo "HF_TOKEN secret is not set; skipping deploy."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.cfg.outputs.enabled == 'true'
+
+      - uses: actions/setup-python@v5
+        if: steps.cfg.outputs.enabled == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Stage Space files
+        if: steps.cfg.outputs.enabled == 'true'
+        run: bash scripts/stage_hf_space.sh build/hf-space
+
+      - name: Upload to Hugging Face
+        if: steps.cfg.outputs.enabled == 'true'
+        run: |
+          pip install --quiet huggingface_hub
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi
+
+          space_id = os.environ["HF_SPACE_ID"]
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          api.create_repo(repo_id=space_id, repo_type="space", space_sdk="docker", exist_ok=True)
+          api.upload_folder(
+              folder_path="build/hf-space",
+              repo_id=space_id,
+              repo_type="space",
+              commit_message="Deploy from GitHub Actions",
+          )
+          print("Uploaded to Space " + space_id)
+          PY
