@@ -2,7 +2,7 @@
 
 A web app that shows the air quality index, pollutant breakdown, a 5-day forecast and a city ranking for any latitude/longitude, with the UI and API structured around NASA TEMPO satellite data. **The data is currently simulated** - see [Limitations](#limitations).
 
-**Live demo:** TODO(owner): add the Hugging Face Space URL once deployed (the previous Azure URL is no longer maintained; see [docs/DEPLOY.md](docs/DEPLOY.md)).
+**Live demo:** offline for now (the Azure student credit that hosted it ran out); run it locally with Docker (see [docs/DEPLOY.md](docs/DEPLOY.md)).
 
 ## Screenshots
 
@@ -48,7 +48,7 @@ Express server (server.js: helmet, CORS, compression, rate limit 100 req / 15 mi
 - **Backend:** Node.js (>= 18), Express 4, Socket.IO, Redis client (optional), JWT, bcrypt, Nodemailer, helmet
 - **Frontend:** plain HTML/CSS/JavaScript, no build step
 - **Testing:** Node's built-in test runner (`node --test`)
-- **Deployment:** Docker, Docker Compose; CI on GitHub Actions; free hosting on a Hugging Face Space
+- **Deployment:** Docker, Docker Compose; CI on GitHub Actions
 
 ## Quick start
 
@@ -78,10 +78,6 @@ docker-compose up -d --build     # app + Redis, http://localhost:3003
 ```
 
 The `Dockerfile` defines a `HEALTHCHECK` that calls `/health`.
-
-### Free hosting (Hugging Face Space)
-
-A GitHub Actions workflow deploys the app to a free Hugging Face Space (Docker SDK) on pushes to `main`, once the owner sets the `HF_TOKEN` secret and `HF_SPACE_ID` variable (it skips quietly otherwise). Accounts and subscriptions reset whenever the Space restarts, and it sleeps after about 48 hours idle. Setup steps and the list of Space secrets: [docs/DEPLOY.md](docs/DEPLOY.md).
 
 A pre-built image is referenced at [hub.docker.com/r/tmpalish/nasaspace-app](https://hub.docker.com/r/tmpalish/nasaspace-app) (TODO(owner): confirm this image is current).
 
