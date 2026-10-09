@@ -52,3 +52,6 @@ Desktop.ini
 .idea/
 *.swp
 *.swo
+
+# Staged Hugging Face Space output
+build/
