@@ -2,7 +2,7 @@
 
 A web app that shows the air quality index, pollutant breakdown, a 5-day forecast and a city ranking for any latitude/longitude, with the UI and API structured around NASA TEMPO satellite data. **The data is currently simulated** - see [Limitations](#limitations).
 
-**Live demo:** not hosted at the moment; run it locally with Docker (see [docs/DEPLOY.md](docs/DEPLOY.md)).
+**Live demo:** TODO(owner) — free hosting on SnapDeploy (sleeps after 15 min idle; first load takes ~1 min)
 
 ## Screenshots
 
