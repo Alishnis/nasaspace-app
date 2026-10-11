@@ -28,7 +28,7 @@ A web app that shows the air quality index, pollutant breakdown, a 5-day forecas
 
 ```
 Browser (static HTML/CSS/vanilla JS, served from public/)
-   |  fetch /api/*            Socket.IO
+   |  fetch /api/*
    v
 Express server (server.js: helmet, CORS, compression, rate limit 100 req / 15 min on /api)
    |
@@ -45,7 +45,7 @@ Express server (server.js: helmet, CORS, compression, rate limit 100 req / 15 mi
 
 ## Tech stack
 
-- **Backend:** Node.js (>= 18), Express 4, Socket.IO, Redis client (optional), JWT, bcrypt, Nodemailer, helmet
+- **Backend:** Node.js (>= 18), Express 4, Redis client (optional), JWT, bcrypt, Nodemailer, helmet
 - **Frontend:** plain HTML/CSS/JavaScript, no build step
 - **Testing:** Node's built-in test runner (`node --test`)
 - **Deployment:** Docker, Docker Compose; CI on GitHub Actions
@@ -100,7 +100,7 @@ All variables are optional for local use. Copy [.env.example](.env.example) to `
 
 ```
 .
-├── server.js            # Express + Socket.IO entry point
+├── server.js            # Express entry point
 ├── routes/              # Express routers (air quality, weather, tempo, notifications, users)
 ├── services/            # Business logic: air quality, TEMPO, weather, notifications, users, cache
 ├── middleware/          # JWT auth, request validation
@@ -148,7 +148,6 @@ Please read before treating any number in the app as real.
 - **No real data source is wired up.** TEMPO, weather and ground-station values are generated with formulas plus `Math.random()` in `services/`. `TEMPO_API_KEY` and `WEATHER_API_KEY` are never used to make a request. Historical data is random, and the city ranking is a hardcoded list.
 - The AQI calculation is a simplified approximation, not the official EPA method (see comments in `services/airQualityService.js`).
 - **Alerts are not sent automatically.** Only a welcome email is sent on subscription; there is no logic that dispatches alerts when air quality changes. SMS and push are placeholders that only log.
-- **Socket.IO live updates are not functional:** the client listens for `air-quality-update` and `alert`, but the server never emits them.
 - Users and subscriptions are stored in memory and are lost on restart; there is no database.
 - `public/js/map.js` (Leaflet map helper) is loaded but Leaflet itself is not included, so no map is shown.
 - Login/register input is not validated beyond what bcrypt and the service require.

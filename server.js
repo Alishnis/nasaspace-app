@@ -1,6 +1,5 @@
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -10,13 +9,6 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
-});
-
 // Middleware
 app.use(helmet());
 app.use(compression());
@@ -52,28 +44,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Socket.io connection handling
-io.on('connection', (socket) => {
-  console.log('User connected:', socket.id);
-  
-  socket.on('subscribe-location', (data) => {
-    socket.join(`location-${data.lat}-${data.lng}`);
-    console.log(`User ${socket.id} subscribed to location ${data.lat}, ${data.lng}`);
-  });
-  
-  socket.on('unsubscribe-location', (data) => {
-    socket.leave(`location-${data.lat}-${data.lng}`);
-    console.log(`User ${socket.id} unsubscribed from location ${data.lat}, ${data.lng}`);
-  });
-  
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-  });
-});
-
-// Make io available to other modules
-app.set('io', io);
-
 const PORT = process.env.PORT || 3003;
 
 // Only start listening when run directly (`node server.js`), so tests can import the app
@@ -85,4 +55,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { app, server, io };
+module.exports = { app, server };

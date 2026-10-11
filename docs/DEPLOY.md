@@ -45,7 +45,7 @@ Notes:
 - 100 container-hours per month, shared across all your containers.
 - Resources: 0.25 vCPU and 512 MB RAM.
 - No persistent disk: users and subscriptions live in process memory and reset on every restart or wake-up.
-- WebSockets need the paid Always-On tier. The app's socket.io client falls back to HTTP long-polling, so the site still works on the free tier.
+- The app uses plain HTTP only (no WebSockets), so it runs on the free tier.
 - Updating: push to `main` publishes a new `:latest`; redeploy or restart the container on SnapDeploy to pull it.
 
 ## Running locally instead
